@@ -31,6 +31,7 @@ SRC = \
 INCLUDES = \
 -I ../../../HeaderFiles \
 -I ../../../SharedFiles \
+-I ../../../Eco.CalculatorA/SharedFiles \
 -I ../../../UnitTestFiles/HeaderFiles \
 -I $(ECO_FRAMEWORK)/Eco.Core1/SharedFiles \
 -I $(ECO_FRAMEWORK)/Eco.InterfaceBus1/SharedFiles \
@@ -40,6 +41,7 @@ INCLUDES = \
 # libraries directories
 LIB_DIR = \
 -L ../../../BuildFiles/Linux/x64/$(CONFIG_TARGET) \
+-L ../../../Eco.CalculatorA/BuildFiles/Linux/x64/StaticRelease -l4828F6552E4540E78121EBD220DC360E \
 -L $(ECO_FRAMEWORK)/Eco.InterfaceBus1/BuildFiles/Linux/x64/StaticRelease \
 -L $(ECO_FRAMEWORK)/Eco.FileSystemManagement1/BuildFiles/Linux/x64/StaticRelease \
 -L $(ECO_FRAMEWORK)/Eco.MemoryManager1/BuildFiles/Linux/x64/StaticRelease \
@@ -59,7 +61,7 @@ CC = gcc
 AR = gcc-ar
 
 ifeq ($(TARGET), 1)
-LIBS_TARGET=-l1F5DF16EE1BF43B999A434ED38FE8F3A
+LIBS_TARGET=-l1F5DF16EE1BF43B999A434ED38FE8F3A -l4828F6552E4540E78121EBD220DC360E
 else
 LIBS_TARGET=
 endif

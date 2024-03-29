@@ -1,4 +1,4 @@
-﻿/*
+/*
  * <кодировка символов>
  *   Cyrillic (UTF-8 with signature) - Codepage 65001
  * </кодировка символов>
@@ -26,6 +26,9 @@
 #include "IdEcoLab1.h"
 #include <stdio.h>
 #include <time.h>
+
+#include "IEcoCalculatorX.h"
+#include "IdEcoCalculatorA.h"
 
 int int_cmp(const void *a, const void *b) {
     const int *pa = (const int *) a;
@@ -81,6 +84,8 @@ int16_t EcoMain(IEcoUnknown *pIUnk) {
     int size = 0;
     /* Указатель на тестируемый интерфейс */
     IEcoLab1 *pIEcoLab1 = 0;
+    /* Указатель на интерфейс X */
+    IEcoCalculatorX* pIX = 0;
 
     /* Проверка и создание системного интрефейса */
     if (pISys == 0) {
@@ -104,6 +109,12 @@ int16_t EcoMain(IEcoUnknown *pIUnk) {
         /* Освобождение в случае ошибки */
         goto Release;
     }
+    /* Регистрация статического компонента */
+    result = pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoCalculatorA, (IEcoUnknown *) GetIEcoComponentFactoryPtr_4828F6552E4540E78121EBD220DC360E);
+    if (result != 0 ) {
+        /* Освобождение в случае ошибки */
+        goto Release;
+    }
 #endif
     /* Получение интерфейса управления памятью */
     result = pIBus->pVTbl->QueryComponent(pIBus, &CID_EcoMemoryManager1, 0, &IID_IEcoMemoryAllocator1,
@@ -115,13 +126,20 @@ int16_t EcoMain(IEcoUnknown *pIUnk) {
         goto Release;
     }
 
-
     /* Получение тестируемого интерфейса */
     result = pIBus->pVTbl->QueryComponent(pIBus, &CID_EcoLab1, 0, &IID_IEcoLab1, (void **) &pIEcoLab1);
     if (result != 0 || pIEcoLab1 == 0) {
         /* Освобождение интерфейсов в случае ошибки */
         goto Release;
     }
+
+    result = pIBus->pVTbl->QueryComponent(pIBus, &CID_EcoCalculatorA, 0, &IID_IEcoCalculatorX, (void**)(&pIX));
+    if (result != 0 || pIX == 0) {
+        printf("IID_IEcoCalculatorX not Found!\n");
+        goto Release;
+    }
+    printf("Successfully IEcoCalculatorX initialized: %p\n", &pIX);
+    printf("IEcoCalculatorX: Addition: 3 + 5 = %d\n", pIX->pVTbl->Addition(pIX, 3, 5));
 
     setlocale(LC_ALL, "Russian");
 
