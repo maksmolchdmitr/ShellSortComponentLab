@@ -32,6 +32,10 @@ INCLUDES = \
 -I ../../../HeaderFiles \
 -I ../../../SharedFiles \
 -I ../../../Eco.CalculatorA/SharedFiles \
+-I ../../../Eco.CalculatorB/SharedFiles \
+-I ../../../Eco.CalculatorC/SharedFiles \
+-I ../../../Eco.CalculatorD/SharedFiles \
+-I ../../../Eco.CalculatorE/SharedFiles \
 -I $(ECO_FRAMEWORK)/Eco.Core1/SharedFiles \
 -I $(ECO_FRAMEWORK)/Eco.InterfaceBus1/SharedFiles \
 -I $(ECO_FRAMEWORK)/Eco.MemoryManager1/SharedFiles

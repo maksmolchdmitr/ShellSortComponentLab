@@ -28,7 +28,13 @@
 #include <time.h>
 
 #include "IEcoCalculatorX.h"
+#include "IEcoCalculatorY.h"
+
 #include "IdEcoCalculatorA.h"
+#include "IdEcoCalculatorB.h"
+#include "IdEcoCalculatorC.h"
+#include "IdEcoCalculatorD.h"
+#include "IdEcoCalculatorE.h"
 
 int int_cmp(const void *a, const void *b) {
     const int *pa = (const int *) a;
@@ -86,6 +92,8 @@ int16_t EcoMain(IEcoUnknown *pIUnk) {
     IEcoLab1 *pIEcoLab1 = 0;
     /* Указатель на интерфейс X */
     IEcoCalculatorX* pIX = 0;
+    /* Указатель на интерфейс Y */
+    IEcoCalculatorY* pIY = 0;
 
     /* Проверка и создание системного интрефейса */
     if (pISys == 0) {
@@ -115,6 +123,30 @@ int16_t EcoMain(IEcoUnknown *pIUnk) {
         /* Освобождение в случае ошибки */
         goto Release;
     }
+    /* Регистрация статического компонента */
+    result = pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoCalculatorB, (IEcoUnknown *) GetIEcoComponentFactoryPtr_AE202E543CE54550899603BD70C62565);
+    if (result != 0 ) {
+        /* Освобождение в случае ошибки */
+        goto Release;
+    }
+    /* Регистрация статического компонента */
+    result = pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoCalculatorC, (IEcoUnknown *) GetIEcoComponentFactoryPtr_4828F6552E4540E78121EBD220DC360E);
+    if (result != 0 ) {
+        /* Освобождение в случае ошибки */
+        goto Release;
+    }
+    /* Регистрация статического компонента */
+    result = pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoCalculatorD, (IEcoUnknown *) GetIEcoComponentFactoryPtr_3A8E44677E82475CB4A3719ED8397E61);
+    if (result != 0 ) {
+        /* Освобождение в случае ошибки */
+        goto Release;
+    }
+    /* Регистрация статического компонента */
+    result = pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoCalculatorE, (IEcoUnknown *) GetIEcoComponentFactoryPtr_872FEF1DE3314B87AD44D1E7C232C2F0);
+    if (result != 0 ) {
+        /* Освобождение в случае ошибки */
+        goto Release;
+    }
 #endif
     /* Получение интерфейса управления памятью */
     result = pIBus->pVTbl->QueryComponent(pIBus, &CID_EcoMemoryManager1, 0, &IID_IEcoMemoryAllocator1,
@@ -133,13 +165,55 @@ int16_t EcoMain(IEcoUnknown *pIUnk) {
         goto Release;
     }
 
-    result = pIBus->pVTbl->QueryComponent(pIBus, &CID_EcoCalculatorA, 0, &IID_IEcoCalculatorX, (void**)(&pIX));
-    if (result != 0 || pIX == 0) {
-        printf("IID_IEcoCalculatorX not Found!\n");
-        goto Release;
-    }
-    printf("Successfully IEcoCalculatorX initialized: %p\n", &pIX);
-    printf("IEcoCalculatorX: Addition: 3 + 5 = %d\n", pIX->pVTbl->Addition(pIX, 3, 5));
+
+
+    // Примеры включения/аггрегирования
+    /* Получение pIEcoLab1 по ID интерфейса IID_IEcoLab1 */
+    result = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoLab1, (void**) &pIEcoLab1);
+
+    // Включение в методах интерфейса IEcoLab1
+    //Метод с включенным EcoCalculatorB
+    result = pIEcoLab1->pVTbl->Addition(pIEcoLab1, 9, 3);
+    printf("IEcoLab1 Addition = %d\n", result);
+    
+    //Метод с включенным EcoCalculatorC
+    result = pIEcoLab1->pVTbl->Subtraction(pIEcoLab1, 9, 3);
+    printf("Substraction = %d\n", result);
+    
+    //Метод с включенным EcoCalculatorD
+    result = pIEcoLab1->pVTbl->Multiplication(pIEcoLab1, 9, 3);
+    printf("Multiplication = %d\n", result);
+    
+    //Метод с включенным EcoCalculatorE
+    result = pIEcoLab1->pVTbl->Division(pIEcoLab1, 9, 3);
+    printf("Division = %d\n", result);
+
+
+    // Аггрегация
+    // Агрегированный компонент по IEcoCalculatorX из EcoLab1
+    result = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoCalculatorX, (void**) &pIX);
+    
+    result = pIX->pVTbl->Addition(pIX,9,3);
+    printf("Addition = %d\n", result);
+    
+    result = pIX->pVTbl->Subtraction(pIX,9,3);
+    printf("Subtraction = %d\n", result);
+
+
+    // /* Получение интерфейса X по IID_IEcoCalculatorX */
+    // result = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoCalculatorX, (void**)(&pIX));
+    // if (result != 0 || pIX == 0) {
+    //     printf("IID_IEcoCalculatorX not Found!\n");
+    //     goto Release;
+    // }
+    // printf("Successfully IEcoCalculatorX initialized: %p\n", &pIX);
+    // printf("IEcoCalculatorX: Addition: 3 + 5 = %d\n", pIX->pVTbl->Addition(pIX, 3, 5));
+
+
+
+
+
+
 
     setlocale(LC_ALL, "Russian");
 

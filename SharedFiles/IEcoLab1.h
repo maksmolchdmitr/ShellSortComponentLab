@@ -44,6 +44,14 @@ typedef struct IEcoLab1VTbl {
     int16_t (ECOCALLMETHOD *ShellSortHibbardStep)(/* in */ struct IEcoLab1 *me, /* in */ void *base, size_t number, size_t width, int (*cmp)(const void *, const void *));
     int16_t (ECOCALLMETHOD *ShellSortKnuthStep)(/* in */ struct IEcoLab1 *me, /* in */ void *base, size_t number, size_t width, int (*cmp)(const void *, const void *));
 
+    /* Interface X */
+    int32_t (ECOCALLMETHOD *Addition)(/* in */ struct CEcoLab1* me, /* in */ int16_t a, /* in */ int16_t b);
+    int16_t (ECOCALLMETHOD *Subtraction)(/* in */ struct CEcoLab1* me, /* in */ int16_t a, /* in */ int16_t b);
+    /* Interface Y */
+    int32_t (ECOCALLMETHOD *Multiplication)(/* in */ struct CEcoLab1* me, /* in */ int16_t a, /* in */ int16_t b);
+    int16_t (ECOCALLMETHOD *Division)(/* in */ struct CEcoLab1* me, /* in */ int16_t a, /* in */ int16_t b);
+
+
 } IEcoLab1VTbl, *IEcoLab1VTblPtr;
 
 interface IEcoLab1{
