@@ -1,2 +1,1 @@
-# ShellSortComponentLab1
-# ShellSortComponentLab2
+# ShellSortComponentLab
