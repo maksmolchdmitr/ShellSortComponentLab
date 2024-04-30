@@ -2,7 +2,7 @@
 OUT_TARGET = lib1F5DF16EE1BF43B999A434ED38FE8F3A.a
 ifeq ($(DEBUG), 1)
 CONFIG_TARGET = StaticDebug
-CCFLAGS_TARGET = -Wall -O3 -g -DECO_LIB
+CCFLAGS_TARGET = -w -O3 -g -DECO_LIB
 LDFLAGS_TARGET =
 else
 CONFIG_TARGET = StaticRelease
@@ -13,7 +13,7 @@ else
 OUT_TARGET = 1F5DF16EE1BF43B999A434ED38FE8F3A.so
 ifeq ($(DEBUG), 1)
 CONFIG_TARGET = DynamicDebug
-CCFLAGS_TARGET = -Wall -O3 -fPIC -g -DECO_DLL
+CCFLAGS_TARGET = -w -O3 -fPIC -g -DECO_DLL
 LDFLAGS_TARGET = -shared
 else
 CONFIG_TARGET = DynamicRelease
@@ -45,7 +45,7 @@ OBJ = $(SRC:.c=.o)
 OUT = $(OUT_TARGET)
 OUT_DIR = ../../../BuildFiles/Linux/x64/$(CONFIG_TARGET)
 
-# C++ compiler flags (-g -O2 -Wall)
+# C++ compiler flags (-g -O2 -w)
 CCFLAGS = $(CCFLAGS_TARGET) -DECO_LINUX -DUGUID_UTILITY
 
 # compiler
